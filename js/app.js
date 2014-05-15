@@ -1,16 +1,16 @@
-var INTERVAL = 1000;
-var DEFAULT_MESSAGE = "終了";
+var INTERVAL = 1000;//INTERVALは１０００という数字です
+var DEFAULT_MESSAGE = "終了";//DEFAULT＿MESSAGEは”終了”という文字
 
 var alarm = {
-		duration: -1,
+		duration: -1,//
 		message: ""
 };
 
 var formatCounterAsString = function(){
-		return "あと" + alarm.duration + "秒";
+		return "あと" + alarm.duration + "秒";//「あと　”alam.durationで指定された文字列”　秒」　と表示させる（例：あと５秒）
 };
 
-var updateCounter = function(){
+var updateCounter = function(){//formatCounterAsString()という関数の結果をalarm.output.textCountentと名付ける
 		alarm.output.textContent = formatCounterAsString();
 };
 
@@ -25,13 +25,13 @@ var showAlarmMessage = function(){
 		alarm.output.textContent = message;
 };
 
-var update = function(){
+var update = function(){//alarm.durationを‐１する
 		alarm.duration = alarm.duration - 1;
-		if(isReadyToCountdown()){
-				updateCounter();
+		if(isReadyToCountdown()){//isReadyToCountdownがtrueのとき以下の二つの動作を行う、updateCounter（）という関数を走らせる　２、１０００ミリ秒後（つまり１秒後）にupdateをもう一度実行する
+				updateCounter();//→つまりこの行はカウントダウンを行うプログラムである
 				window.setTimeout(update, INTERVAL);
 		}else{
-				showAlarmMessage();
+				showAlarmMessage();//isReadyToCountdownがforseの時ShowAlarmMessage
 		}
 };
 
@@ -45,25 +45,25 @@ var setupAlarm = function(durationString, message){
 };
 
 var startAlarm = function(){
-		setupAlarm(alarm.durationSelect.value, alarm.messageInput.value);
-		if(isReadyToCountdown()){
+		setupAlarm(alarm.durationSelect.value, alarm.messageInput.value);//alarm.durationSelect.valueがtrueのときsetupAlarmのclassをalarm.messageInput.valueにする
+		if(isReadyToCountdown()){//isReadyToCountdownがtrueのときに以下の二つの動作をする　１．pdateCounter()という関数を走らせる　２．INTERVAL（つまり１０００）ミリ秒後要するに１秒後にupdateという関数を走らせる
 				updateCounter();
 				window.setTimeout(update, INTERVAL);
 		}
 };
 
 var initApp = function(){
-		alarm.durationSelect = document.querySelector("#duration");
-		alarm.messageInput = document.querySelector("#message");
-		alarm.output = document.querySelector("#countdown");
+		alarm.durationSelect = document.querySelector("#duration");//htmlの＃durationというidの文字をalarm.durationSelectと名付ける
+		alarm.messageInput = document.querySelector("#message");//htmlの＃messateというidの文字をalarm.messageInputと名付ける
+		alarm.output = document.querySelector("#countdown");//htmlの＃countdownというidの文字をalarm.outputと名付ける
 
-		Notification.requestPermission(function(status){
+		Notification.requestPermission(function(status){//はじめてこのページを開いたときに　許可する・ブロックする・今回は無視する　というポップアップが自動で表示されるが、ユーザーがこの内容をのちに手動で変更したときに、その変更を適用する
 				if(Notification.permission != status){
 						Notification.permission = status;
 				}
 		});
 
-		var startButton = document.querySelector("#start");
+		var startButton = document.querySelector("#start");//#startというidのボタンをクリックしたときにstartAlarmという関数を走らせる
 		startButton.addEventListener("click", startAlarm);
 };
 
