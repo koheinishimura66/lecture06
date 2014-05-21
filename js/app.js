@@ -1,17 +1,18 @@
 var INTERVAL = 1000;//INTERVALはのちの行でカウントダウンのスピードの指定に使われている数値です。今は１０００ミリ秒＝１秒にセットされています。
 var DEFAULT_MESSAGE = "発表終了";//DEFAULT＿MESSAGEは入力が何もないときに表示する文章を表しています。今は”終了”とセットされています
-var YOREI_MESSAGE = "予鈴"
-var SITUGI_MESSAGE = "質疑応答終了"
+var YOREI_MESSAGE = "予鈴";
+var SITUGI_MESSAGE = "質疑応答終了";
+var COUNT_MESSAGE = "発表時間"
 
 var alarm = {//何も入力されていないとき、alarm.durationは-1 alarm.messageは””（空白）に取り敢えず設定しておくプログラム
 		duration: -1,
-		yorei: -1
-		situgi: -1
+		yorei: -1,
+		situgi: -1,
 		message: ""
 };
 
 var formatCounterAsString = function(){
-		return　"発表時間" + "あと" + alarm.duration + "秒";//発表時間中のメッセージ
+		return　alarm.message + "あと" + alarm.duration + "秒";//発表時間中のメッセージ
 };
 
 var Situgi_formatCounterAsString = function(){
@@ -32,7 +33,8 @@ var showAlarmMessage = function(){
 				var notification = new Notification(message);
 		}
 		alarm.output.textContent = message;
-		next.setTimeout(situgi_update, 2000) 
+		next.setTimeout(situgi_updateCounter, 2000) 
+		situgi_update()
 };
 
 var show_situgi_AlarmMessage = function(){
@@ -44,7 +46,12 @@ var show_situgi_AlarmMessage = function(){
 };
 
 var update = function(){//カウントダウンを行い、カウントダウンが終わったのちにメッセージを表示させる関数
-		alarm.duration = alarm.duration - 1;//alarm.durationを‐１する
+        alarm.duration = alarm.duration - 1;//alarm.durationを‐１する
+        
+        if(alarm.duration == alarm.yorei){
+			alarm.message = YOREI_MESSAGE
+		}
+		
 		if(isReadyToCountdown()){//isReadyToCountdownがtrueのとき（まだカウントダウンが終わっていない時）以下の二つの動作を行う
 				updateCounter();//１、updateCounter（）という関数を走らせる
 				window.setTimeout(update, INTERVAL);//２、INREVALに設定されている時間（今は１０００ミリ秒になっている）ののちにupdateをもう一度実行する
@@ -72,14 +79,15 @@ var is_situgi_ReadyToCountdown = function(){//質疑応答時間のカウント�
 };
 
 
-var setupAlarm = function(durationString, message){
+var setupAlarm = function(durationString, yoreiString, situgiString){
 		alarm.duration = Number(durationString),//alarm.durationにdurationStringに指定されている数字を設定
-		alarm.yorei = Number(yoreiString)
-		alarm.situgi= Number(situgiString)
+        alarm.message = DEFAULT_MESSAGE
+        alarm.yorei = yoreiString
+        alarm.situgi = situgiString
 };
 
 var startAlarm = function(){
-		setupAlarm(alarm.durationSelect.value, alarm.messageInput.value);//alarm.durationSelect　と　alarm.messageInput　を表示する
+		setupAlarm(alarm.durationSelect.value, alarm.yoreiSelect.value, alarm.situgiSelect.value);//alarm.durationSelect　の値を　setupAlarmのdurationStringに代入して表示する
 		if(isReadyToCountdown()){//isReadyToCountdownがtrueのときに以下の二つの動作をする　　
 				updateCounter();//１．pdateCounter()という関数を走らせる
 				window.setTimeout(update, INTERVAL);//２．INTERVALに設定されている時間（今は１０００ミリ秒にセットされている）ののちにupdateという関数を走らせる
