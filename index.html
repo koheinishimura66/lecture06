@@ -9,20 +9,43 @@
   <body>
     <div id="control">
       <form>
+        発表時間：
         <select id="duration">
-          <option value="5">5秒後</option>
-          <option value="10">10秒後</option>
-          <option value="30">30秒後</option>
-          <option value="60">60秒後</option>
-          <option value="90">90秒後</option>
-          <option value="180">3分後</option>
-          <option value="900">15分後</option>
-          <option value="1800">30分後</option>
+          <option value="5">5秒</option>
+          <option value="10">10秒</option>
+          <option value="30">30秒</option>
+          <option value="60">60秒</option>
+          <option value="90">90秒</option>
+          <option value="180">3分</option>
+          <option value="900">15分</option>
+          <option value="1800">30分</option>
         </select>
-        に
-        <input type="text" id="message">
-        と
-        <button type="button" id="start">表示する</button>
+        <br>
+        予鈴：
+
+        <select id="yorei">
+          <option value="3">3秒前</option>
+          <option value="10">10秒前</option>
+          <option value="30">30秒前</option>
+          <option value="60">60秒前</option>
+          <option value="90">90秒前</option>
+          <option value="180">3分前</option>
+          <option value="300">5分前</option>
+        </select>
+        <br>
+        質疑応答：
+        <select id="situgi">
+          <option value="5">5秒</option>
+          <option value="10">10秒</option>
+          <option value="30">30秒</option>
+          <option value="60">60秒</option>
+          <option value="90">90秒</option>
+          <option value="180">3分</option>
+          <option value="900">15分</option>
+          <option value="1800">30分</option>
+        </select>
+        
+        <button type="button" id="start">開始</button>
       </form>
     </div>
     <div id="countdown">
