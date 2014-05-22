@@ -23,6 +23,7 @@ var updateCounter = function(){//formatCounterAsString()という関数の結果
 		alarm.output.textContent = formatCounterAsString();
 };
 
+
 var Situgi_updateCounter = function(){//Situgi_formatCounterAsString()という関数の結果（あと～秒）をalarm.output.Situgi_textCountentに代入する
 		alarm.output.Situgi_textContent = Situgi_formatCounterAsString();
 };
@@ -33,8 +34,7 @@ var showAlarmMessage = function(){
 				var notification = new Notification(message);
 		}
 		alarm.output.textContent = message;
-		next.setTimeout(situgi_updateCounter, 2000) 
-		situgi_update()
+		window.setTimeout(start_situgi_Alarm, 2000) 
 };
 
 var show_situgi_AlarmMessage = function(){
@@ -75,7 +75,7 @@ var isReadyToCountdown = function(){//発表時間のカウントダウンが終
 };
 
 var is_situgi_ReadyToCountdown = function(){//質疑応答時間のカウントダウンが終わったかどうかを調べるプログラム
-		return Number.isSitugi(alarm.situgi) && alarm.situgi > 0;//is Integer(alarm.Situgi)を表示し、alarm.durationが 0　より大きいときTrue
+		return Number.isInteger(alarm.situgi) && alarm.situgi > 0;//is Integer(alarm.Situgi)を表示し、alarm.durationが 0　より大きいときTrue
 };
 
 
@@ -91,6 +91,13 @@ var startAlarm = function(){
 		if(isReadyToCountdown()){//isReadyToCountdownがtrueのときに以下の二つの動作をする　　
 				updateCounter();//１．pdateCounter()という関数を走らせる
 				window.setTimeout(update, INTERVAL);//２．INTERVALに設定されている時間（今は１０００ミリ秒にセットされている）ののちにupdateという関数を走らせる
+		}
+};
+
+var start_situgi_Alarm = function(){
+		if(is_situgi_ReadyToCountdown()){//isReadyToCountdownがtrueのときに以下の二つの動作をする　　
+				updateCounter();//１．pdateCounter()という関数を走らせる
+				window.setTimeout(situgi_update, INTERVAL);//２．INTERVALに設定されている時間（今は１０００ミリ秒にセットされている）ののちにupdateという関数を走らせる
 		}
 };
 
